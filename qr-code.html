@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Creator</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        overflow: hidden;
+      }
+      .glass {
+        backdrop-filter: blur(25px);
+      }
+      canvas {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 1.5rem;
+      }
+      .custom-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: #10b981;
+        border-radius: 10px;
+      }
+      .dropdown-container {
+        position: relative;
+      }
+      .menu-down {
+        position: absolute;
+        top: 110%;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+      }
+      .menu-up {
+        position: absolute;
+        bottom: 110%;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+      }
+      .flag-img {
+        width: 22px;
+        height: 16px;
+        object-fit: cover;
+        border-radius: 2px;
+      }
+      @keyframes qr-generate {
+        0% {
+          opacity: 0.3;
+          transform: scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .qr-animate {
+        animation: qr-generate 0.3s ease-out;
+      }
+    </style>
+  </head>
+  <body id="body-bg" class="h-screen flex items-center justify-center">
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+      const Icon = ({ name, className }) => {
+        useEffect(() => {
+          if (window.lucide) window.lucide.createIcons();
+        });
+        return React.createElement("i", { "data-lucide": name, className });
+      };
+
+      const CustomSelect = ({
+        value,
+        onChange,
+        options,
+        isDarkMode,
+        minWidth = "min-w-[140px]",
+        direction = "down",
+        isPhoneSelector = false,
+      }) => {
+        const [isOpen, setIsOpen] = useState(false);
+        const [searchTerm, setSearchTerm] = useState("");
+        const [highlightedIndex, setHighlightedIndex] = useState(-1);
+        const dropdownRef = useRef(null);
+        const inputRef = useRef(null);
+        const optionRefs = useRef([]);
+
+        useEffect(() => {
+          if (!isOpen) {
+            setSearchTerm("");
+            setHighlightedIndex(-1);
+          } else {
+            setTimeout(() => inputRef.current?.focus(), 50);
+          }
+        }, [isOpen]);
+
+        useEffect(() => {
+          const handleClickOutside = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target))
+              setIsOpen(false);
+          };
+          document.addEventListener("mousedown", handleClickOutside);
+          return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+        }, []);
+
+        const selectedOption = useMemo(
+          () => options.find((o) => o.value === value) || options[0],
+          [value, options],
+        );
+
+        const filteredOptions = useMemo(() => {
+          if (!searchTerm.trim()) return options;
+          const search = searchTerm.toLowerCase().trim();
+          return options.filter((opt) => {
+            const fields = [
+              opt.label,
+              opt.value,
+              opt.displayLabel,
+              opt.shortLabel,
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
+            return fields.includes(search);
+          });
+        }, [searchTerm, options]);
+
+        const handleKeyDown = useCallback(
+          (e) => {
+            if (!isOpen) return;
+            switch (e.key) {
+              case "ArrowDown":
+                e.preventDefault();
+                setHighlightedIndex((prev) =>
+                  prev < filteredOptions.length - 1 ? prev + 1 : prev,
+                );
+                break;
+              case "ArrowUp":
+                e.preventDefault();
+                setHighlightedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+                break;
+              case "Home":
+                e.preventDefault();
+                setHighlightedIndex(0);
+                break;
+              case "End":
+                e.preventDefault();
+                setHighlightedIndex(filteredOptions.length - 1);
+                break;
+              case "Enter":
+                e.preventDefault();
+                if (
+                  highlightedIndex >= 0 &&
+                  highlightedIndex < filteredOptions.length
+                ) {
+                  handleSelect(filteredOptions[highlightedIndex].value);
+                }
+                break;
+              case "Escape":
+                e.preventDefault();
+                setIsOpen(false);
+                break;
+            }
+          },
+          [isOpen, highlightedIndex, filteredOptions],
+        );
+
+        useEffect(() => {
+          if (highlightedIndex >= 0 && optionRefs.current[highlightedIndex]) {
+            optionRefs.current[highlightedIndex]?.scrollIntoView({
+              block: "nearest",
+              behavior: "smooth",
+            });
+          }
+        }, [highlightedIndex]);
+
+        useEffect(() => {
+          if (isOpen) {
+            window.addEventListener("keydown", handleKeyDown);
+            return () => window.removeEventListener("keydown", handleKeyDown);
+          }
+        }, [isOpen, handleKeyDown]);
+
+        const handleSelect = useCallback(
+          (optValue) => {
+            onChange(optValue);
+            setIsOpen(false);
+            setSearchTerm("");
+          },
+          [onChange],
+        );
+
+        return (
+          <div
+            className={`dropdown-container flex-shrink-0 ${minWidth}`}
+            ref={dropdownRef}
+          >
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className={`flex items-center justify-between gap-2 px-4 py-3.5 rounded-xl font-bold transition-all border-2 w-full ${isDarkMode ? "bg-emerald-900/60 border-emerald-500/40 text-emerald-50" : "bg-white border-emerald-200 text-emerald-900"}`}
+            >
+              <span className="flex items-center gap-2 truncate">
+                {selectedOption.flagCode && (
+                  <img
+                    src={`https://flagcdn.com/w40/${selectedOption.flagCode}.png`}
+                    className="flag-img"
+                    loading="lazy"
+                    alt=""
+                  />
+                )}
+                <span className="text-sm">
+                  {selectedOption.shortLabel || selectedOption.value}
+                </span>
+              </span>
+              <Icon
+                name="chevron-down"
+                className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {isOpen && (
+              <div
+                className={`${direction === "up" ? "menu-up" : "menu-down"} rounded-2xl shadow-2xl border glass ${isDarkMode ? "bg-slate-900 border-emerald-700" : "bg-white border-emerald-100"}`}
+              >
+                <div
+                  className={`sticky top-0 p-2 border-b z-10 ${isDarkMode ? "border-emerald-800 bg-slate-900" : "border-emerald-100 bg-white"}`}
+                >
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    className={`w-full px-3 py-2 rounded-lg text-sm outline-none ${isDarkMode ? "bg-emerald-900/30 border border-emerald-700 text-emerald-50 placeholder-emerald-500/50" : "bg-emerald-50 border border-emerald-200 text-emerald-900 placeholder-emerald-400"}`}
+                    autoComplete="off"
+                  />
+                </div>
+                <div className="py-2 custom-scroll max-h-52 overflow-y-auto">
+                  {filteredOptions.length > 0 ? (
+                    filteredOptions.map((opt, i) => (
+                      <div
+                        key={`${opt.value}-${i}`}
+                        ref={(el) => (optionRefs.current[i] = el)}
+                        onClick={() => handleSelect(opt.value)}
+                        onMouseEnter={() => setHighlightedIndex(i)}
+                        className={`px-4 py-3.5 cursor-pointer flex items-center justify-between transition-colors ${i === highlightedIndex ? (isDarkMode ? "bg-emerald-600/60" : "bg-emerald-100") : isDarkMode ? "hover:bg-emerald-600/40 text-emerald-50" : "hover:bg-emerald-50 text-emerald-900"} ${isDarkMode ? "text-emerald-50" : "text-emerald-900"}`}
+                      >
+                        <span className="flex items-center gap-3 flex-1 min-w-0">
+                          {opt.flagCode && (
+                            <img
+                              src={`https://flagcdn.com/w40/${opt.flagCode}.png`}
+                              className="flag-img flex-shrink-0"
+                              loading="lazy"
+                              alt=""
+                            />
+                          )}
+                          <span
+                            className={`font-bold tracking-tight truncate ${isPhoneSelector ? "text-[11px]" : "text-sm"}`}
+                          >
+                            {opt.displayLabel || opt.label}
+                          </span>
+                        </span>
+                        {value === opt.value && (
+                          <Icon
+                            name="check"
+                            className="w-4 h-4 text-emerald-400 flex-shrink-0 ml-2"
+                          />
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div
+                      className={`px-4 py-6 text-center text-sm ${isDarkMode ? "text-emerald-500/50" : "text-emerald-400"}`}
+                    >
+                      No results found
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      const COUNTRY_DATA = {
+        "+1": {
+          flag: "us",
+          label: "(+1) USA",
+          shortLabel: "USA",
+          max: 10,
+          placeholder: "XXX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+33": {
+          flag: "fr",
+          label: "(+33) France",
+          shortLabel: "France",
+          max: 9,
+          placeholder: "X XX XX XX XX",
+          pattern: [1, 2, 2, 2, 2],
+        },
+        "+44": {
+          flag: "gb",
+          label: "(+44) UK",
+          shortLabel: "UK",
+          max: 10,
+          placeholder: "XXXX XXX XXX",
+          pattern: [4, 3, 3],
+        },
+        "+49": {
+          flag: "de",
+          label: "(+49) Germany",
+          shortLabel: "Germany",
+          max: 11,
+          placeholder: "XXX XXXXXXXX",
+          pattern: [3, 8],
+        },
+        "+81": {
+          flag: "jp",
+          label: "(+81) Japan",
+          shortLabel: "Japan",
+          max: 10,
+          placeholder: "XX XXXX XXXX",
+          pattern: [2, 4, 4],
+        },
+      };
+
+      const App = () => {
+        const [isDarkMode, setIsDarkMode] = useState(true);
+        const [activeTab, setActiveTab] = useState("url");
+        const [protocol, setProtocol] = useState("https://");
+        const [url, setUrl] = useState("");
+        const [copyStatus, setCopyStatus] = useState(false);
+        const [isGenerating, setIsGenerating] = useState(false);
+        const [wifi, setWifi] = useState({
+          ssid: "",
+          password: "",
+          security: "WPA",
+        });
+        const [contact, setContact] = useState({
+          fn: "",
+          ln: "",
+          tel: "",
+          phonePrefix: "+1",
+          emailUser: "",
+          emailDomain: "@gmail.com",
+        });
+        const [sms, setSms] = useState({
+          phonePrefix: "+1",
+          tel: "",
+          message: "",
+        });
+        const [crypto, setCrypto] = useState({
+          blockchain: "bitcoin",
+          address: "",
+          amount: "",
+        });
+        const [geo, setGeo] = useState({
+          latitude: "",
+          longitude: "",
+          label: "",
+        });
+        const qrRef = useRef(null);
+
+        const formatPhone = useCallback((digits, pattern) => {
+          let res = "",
+            ptr = 0;
+          for (let i = 0; i < pattern.length && ptr < digits.length; i++) {
+            res += digits.substring(ptr, ptr + pattern[i]) + " ";
+            ptr += pattern[i];
+          }
+          return res.trim();
+        }, []);
+
+        const currentCountry = COUNTRY_DATA[contact.phonePrefix];
+        const smsCountry = COUNTRY_DATA[sms.phonePrefix];
+        const rawTel = contact.tel.replace(/\s/g, "");
+        const smsRawTel = sms.tel.replace(/\s/g, "");
+
+        const isUrlValid =
+          url.includes(".") && url.split(".").every((p) => p.length > 0);
+        const isEmailValid = /^[a-zA-Z0-9._%+-]+$/.test(contact.emailUser);
+        const isPhoneValid =
+          rawTel.length >= 8 && rawTel.length <= currentCountry.max;
+        const isWifiValid = wifi.ssid.length > 0;
+        const isSmsValid =
+          smsRawTel.length >= 8 &&
+          smsRawTel.length <= smsCountry.max &&
+          sms.message.length > 0;
+        const cryptoRegex = {
+          bitcoin: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,62}$/,
+          ethereum: /^0x[a-fA-F0-9]{40}$/,
+          usdt: /^0x[a-fA-F0-9]{40}$/,
+          bnb: /^0x[a-fA-F0-9]{40}$/,
+          solana: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
+        };
+        const isCryptoValid =
+          cryptoRegex[crypto.blockchain]?.test(crypto.address) || false;
+        const isGeoValid =
+          geo.latitude !== "" &&
+          geo.longitude !== "" &&
+          parseFloat(geo.latitude) >= -90 &&
+          parseFloat(geo.latitude) <= 90 &&
+          parseFloat(geo.longitude) >= -180 &&
+          parseFloat(geo.longitude) <= 180;
+
+        const hasData =
+          activeTab === "url"
+            ? isUrlValid
+            : activeTab === "wifi"
+              ? isWifiValid
+              : activeTab === "sms"
+                ? isSmsValid
+                : activeTab === "crypto"
+                  ? isCryptoValid
+                  : activeTab === "geo"
+                    ? isGeoValid
+                    : contact.fn || contact.ln || isPhoneValid || isEmailValid;
+
+        useEffect(() => {
+          document.getElementById("body-bg").className = isDarkMode
+            ? "bg-[#011612] h-screen flex items-center justify-center"
+            : "bg-emerald-50 h-screen flex items-center justify-center";
+        }, [isDarkMode]);
+
+        useEffect(() => {
+          if (!qrRef.current) return;
+          setIsGenerating(true);
+          const timer = setTimeout(() => setIsGenerating(false), 300);
+          if (!hasData) {
+            const ctx = qrRef.current.getContext("2d");
+            ctx.clearRect(0, 0, qrRef.current.width, qrRef.current.height);
+            setIsGenerating(false);
+            return () => clearTimeout(timer);
+          }
+          let data = "";
+          if (activeTab === "url") data = `${protocol}${url}`;
+          else if (activeTab === "wifi")
+            data = `WIFI:S:${wifi.ssid};T:${wifi.security};P:${wifi.password};;`;
+          else if (activeTab === "sms")
+            data = `SMSTO:${sms.phonePrefix.split("-")[0]}${smsRawTel}:${sms.message}`;
+          else if (activeTab === "crypto") {
+            const prefixes = {
+              bitcoin: "bitcoin:",
+              ethereum: "ethereum:",
+              usdt: "ethereum:",
+              bnb: "ethereum:",
+              solana: "solana:",
+            };
+            data = `${prefixes[crypto.blockchain]}${crypto.address}${crypto.amount ? `?amount=${crypto.amount}` : ""}`;
+          } else if (activeTab === "geo")
+            data = `geo:${geo.latitude},${geo.longitude}${geo.label ? `?q=${geo.latitude},${geo.longitude}(${encodeURIComponent(geo.label)})` : ""}`;
+          else
+            data = `BEGIN:VCARD\nVERSION:3.0\nFN:${contact.fn} ${contact.ln}\n${rawTel ? `TEL:${contact.phonePrefix.split("-")[0]}${rawTel}\n` : ""}${contact.emailUser ? `EMAIL:${contact.emailUser}${contact.emailDomain}\n` : ""}END:VCARD`;
+          try {
+            new QRious({
+              element: qrRef.current,
+              value: data,
+              size: 600,
+              level: "H",
+              foreground: isDarkMode ? "#10b981" : "#064e3b",
+              background: "#ffffff",
+            });
+          } catch (e) {
+            console.error("QR error:", e);
+          }
+          return () => clearTimeout(timer);
+        }, [
+          url,
+          contact,
+          wifi,
+          sms,
+          crypto,
+          geo,
+          activeTab,
+          protocol,
+          isDarkMode,
+          hasData,
+          rawTel,
+          smsRawTel,
+        ]);
+
+        const copyToClipboard = () => {
+          if (!qrRef.current) return;
+          qrRef.current.toBlob((blob) => {
+            navigator.clipboard
+              .write([new ClipboardItem({ "image/png": blob })])
+              .then(() => {
+                setCopyStatus(true);
+                setTimeout(() => setCopyStatus(false), 2000);
+              });
+          });
+        };
+
+        const shareQR = () => {
+          if (!qrRef.current) return;
+          qrRef.current.toBlob(async (blob) => {
+            const file = new File([blob], "qrcode.png", { type: "image/png" });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              try {
+                await navigator.share({ files: [file], title: "QR Code" });
+              } catch (err) {}
+            }
+          });
+        };
+
+        const downloadPNG = () => {
+          if (!qrRef.current || !hasData) return;
+          const a = document.createElement("a");
+          a.download = "qrcode.png";
+          a.href = qrRef.current.toDataURL();
+          a.click();
+        };
+
+        const downloadSVG = () => {
+          if (!qrRef.current || !hasData) return;
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600"><rect width="100%" height="100%" fill="white"/><image width="600" height="600" href="${qrRef.current.toDataURL()}"/></svg>`;
+          const link = document.createElement("a");
+          link.href = "data:image/svg+xml;base64," + btoa(svg);
+          link.download = "qrcode.svg";
+          link.click();
+        };
+
+        const inputClass = (valid, hasValue) =>
+          `w-full p-4 rounded-xl border-2 outline-none transition-all font-semibold ${isDarkMode ? `bg-emerald-900/30 ${hasValue ? (valid ? "border-emerald-500/50" : "border-red-500/50") : "border-emerald-800/60"} text-emerald-50 focus:border-emerald-400` : `bg-white ${hasValue ? (valid ? "border-emerald-500" : "border-red-400") : "border-emerald-100"} text-emerald-900 focus:border-emerald-500`}`;
+
+        const protocolOptions = [
+          { value: "https://", label: "https://" },
+          { value: "http://", label: "http://" },
+        ];
+        const emailDomainOptions = [
+          { value: "@gmail.com", label: "@gmail.com" },
+          { value: "@outlook.com", label: "@outlook.com" },
+          { value: "@proton.me", label: "@proton.me" },
+          { value: "@icloud.com", label: "@icloud.com" },
+        ];
+        const securityOptions = [
+          { value: "WPA", label: "WPA/WPA2" },
+          { value: "WEP", label: "WEP" },
+          { value: "nopass", label: "No Password" },
+        ];
+        const blockchainOptions = [
+          { value: "bitcoin", label: "Bitcoin (BTC)" },
+          { value: "ethereum", label: "Ethereum (ETH)" },
+          { value: "usdt", label: "Tether (USDT)" },
+          { value: "bnb", label: "Binance (BNB)" },
+          { value: "solana", label: "Solana (SOL)" },
+        ];
+        const phoneOptions = Object.entries(COUNTRY_DATA).map(([k, v]) => ({
+          value: k,
+          label: v.label,
+          displayLabel: `${v.label.split(") ")[0]}) ${v.shortLabel}`,
+          shortLabel: `(${k.split("-")[0]})`,
+          flagCode: v.flag,
+        }));
+
+        return (
+          <div className="flex items-center justify-center p-4">
+            <div
+              className={`w-full max-w-5xl rounded-[2.5rem] border-2 glass flex flex-col lg:flex-row shadow-2xl ${isDarkMode ? "bg-emerald-950/40 border-emerald-800/40" : "bg-white border-emerald-200"}`}
+            >
+              <div className="p-8 lg:p-12 lg:w-3/5 space-y-8">
+                <div className="flex justify-between items-center">
+                  <h1
+                    className={`text-3xl font-extrabold tracking-tight ${isDarkMode ? "text-white" : "text-emerald-900"}`}
+                  >
+                    QR Creator
+                  </h1>
+                  <button
+                    onClick={() => setIsDarkMode(!isDarkMode)}
+                    className="p-3 rounded-xl bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-all"
+                  >
+                    <Icon
+                      name={isDarkMode ? "sun" : "moon"}
+                      className="w-5 h-5"
+                    />
+                  </button>
+                </div>
+                <div className="flex gap-2 p-1.5 bg-black/10 rounded-2xl overflow-x-auto custom-scroll">
+                  {[
+                    { id: "url", icon: "link", label: "Web" },
+                    { id: "contact", icon: "user", label: "Card" },
+                    { id: "wifi", icon: "wifi", label: "WiFi" },
+                    { id: "sms", icon: "message-square", label: "SMS" },
+                    { id: "crypto", icon: "bitcoin", label: "Crypto" },
+                    { id: "geo", icon: "map-pin", label: "Geo" },
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`flex-shrink-0 px-4 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${activeTab === tab.id ? "bg-emerald-500 text-white shadow-md" : "text-emerald-500/60 hover:bg-emerald-500/5"}`}
+                    >
+                      <Icon name={tab.icon} className="w-4 h-4" />
+                      <span className="hidden sm:inline text-xs">
+                        {tab.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <div className="space-y-6">
+                  {activeTab === "url" && (
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                        Website URL
+                      </label>
+                      <div className="flex gap-3">
+                        <CustomSelect
+                          value={protocol}
+                          options={protocolOptions}
+                          isDarkMode={isDarkMode}
+                          onChange={setProtocol}
+                          minWidth="min-w-[120px]"
+                        />
+                        <input
+                          type="text"
+                          placeholder="google.com"
+                          className={inputClass(isUrlValid, url.length > 0)}
+                          value={url}
+                          onChange={(e) =>
+                            setUrl(e.target.value.replace(/\s/g, ""))
+                          }
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {activeTab === "wifi" && (
+                    <div className="space-y-5">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Network Name (SSID)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="MyWiFiNetwork"
+                          className={inputClass(
+                            wifi.ssid.length > 0,
+                            wifi.ssid.length > 0,
+                          )}
+                          value={wifi.ssid}
+                          onChange={(e) =>
+                            setWifi({ ...wifi, ssid: e.target.value })
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Password
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Optional"
+                          className={inputClass(true, wifi.password.length > 0)}
+                          value={wifi.password}
+                          onChange={(e) =>
+                            setWifi({ ...wifi, password: e.target.value })
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Security Type
+                        </label>
+                        <CustomSelect
+                          value={wifi.security}
+                          options={securityOptions}
+                          isDarkMode={isDarkMode}
+                          onChange={(v) => setWifi({ ...wifi, security: v })}
+                          minWidth="w-full"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {activeTab === "contact" && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          First Name
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="John"
+                          className={inputClass(true, contact.fn)}
+                          value={contact.fn}
+                          onChange={(e) =>
+                            setContact({
+                              ...contact,
+                              fn:
+                                e.target.value.charAt(0).toUpperCase() +
+                                e.target.value.slice(1),
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="DOE"
+                          className={inputClass(true, contact.ln)}
+                          value={contact.ln}
+                          onChange={(e) =>
+                            setContact({
+                              ...contact,
+                              ln: e.target.value.toUpperCase(),
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="md:col-span-2 space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Phone Number
+                        </label>
+                        <div className="flex gap-3">
+                          <CustomSelect
+                            value={contact.phonePrefix}
+                            options={phoneOptions}
+                            isDarkMode={isDarkMode}
+                            onChange={(v) =>
+                              setContact({
+                                ...contact,
+                                phonePrefix: v,
+                                tel: "",
+                              })
+                            }
+                            minWidth="min-w-[170px]"
+                            isPhoneSelector={true}
+                          />
+                          <input
+                            type="tel"
+                            placeholder={currentCountry.placeholder}
+                            className={inputClass(
+                              isPhoneValid,
+                              contact.tel.length > 0,
+                            )}
+                            value={contact.tel}
+                            onChange={(e) => {
+                              const digits = e.target.value.replace(
+                                /[^0-9]/g,
+                                "",
+                              );
+                              if (digits.length <= currentCountry.max)
+                                setContact({
+                                  ...contact,
+                                  tel: formatPhone(
+                                    digits,
+                                    currentCountry.pattern,
+                                  ),
+                                });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="md:col-span-2 space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Email Address
+                        </label>
+                        <div className="flex gap-3">
+                          <input
+                            type="text"
+                            placeholder="username"
+                            className={inputClass(
+                              isEmailValid,
+                              contact.emailUser.length > 0,
+                            )}
+                            value={contact.emailUser}
+                            onChange={(e) =>
+                              setContact({
+                                ...contact,
+                                emailUser: e.target.value.replace(
+                                  /[^a-zA-Z0-9._%+-]/g,
+                                  "",
+                                ),
+                              })
+                            }
+                          />
+                          <CustomSelect
+                            value={contact.emailDomain}
+                            options={emailDomainOptions}
+                            isDarkMode={isDarkMode}
+                            onChange={(v) =>
+                              setContact({ ...contact, emailDomain: v })
+                            }
+                            minWidth="min-w-[180px]"
+                            direction="up"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {activeTab === "sms" && (
+                    <div className="space-y-5">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Phone Number
+                        </label>
+                        <div className="flex gap-3">
+                          <CustomSelect
+                            value={sms.phonePrefix}
+                            options={phoneOptions}
+                            isDarkMode={isDarkMode}
+                            onChange={(v) =>
+                              setSms({ ...sms, phonePrefix: v, tel: "" })
+                            }
+                            minWidth="min-w-[170px]"
+                            isPhoneSelector={true}
+                          />
+                          <input
+                            type="tel"
+                            placeholder={smsCountry.placeholder}
+                            className={inputClass(
+                              smsRawTel.length >= 8 &&
+                                smsRawTel.length <= smsCountry.max,
+                              sms.tel.length > 0,
+                            )}
+                            value={sms.tel}
+                            onChange={(e) => {
+                              const digits = e.target.value.replace(
+                                /[^0-9]/g,
+                                "",
+                              );
+                              if (digits.length <= smsCountry.max)
+                                setSms({
+                                  ...sms,
+                                  tel: formatPhone(digits, smsCountry.pattern),
+                                });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest flex justify-between">
+                          <span>Message</span>
+                          <span
+                            className={
+                              sms.message.length > 160
+                                ? "text-red-500"
+                                : "text-emerald-500/60"
+                            }
+                          >
+                            {sms.message.length}/160
+                          </span>
+                        </label>
+                        <textarea
+                          placeholder="Your message here..."
+                          className={`${inputClass(sms.message.length > 0 && sms.message.length <= 160, sms.message.length > 0)} resize-none h-32`}
+                          value={sms.message}
+                          maxLength={160}
+                          onChange={(e) =>
+                            setSms({ ...sms, message: e.target.value })
+                          }
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {activeTab === "crypto" && (
+                    <div className="space-y-5">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Blockchain
+                        </label>
+                        <CustomSelect
+                          value={crypto.blockchain}
+                          options={blockchainOptions}
+                          isDarkMode={isDarkMode}
+                          onChange={(v) =>
+                            setCrypto({ ...crypto, blockchain: v, address: "" })
+                          }
+                          minWidth="w-full"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Wallet Address
+                        </label>
+                        <input
+                          type="text"
+                          placeholder={
+                            crypto.blockchain === "bitcoin"
+                              ? "bc1q... or 1A1z..."
+                              : crypto.blockchain === "solana"
+                                ? "7xKX... (32-44)"
+                                : "0x742d... (42 chars)"
+                          }
+                          className={inputClass(
+                            isCryptoValid,
+                            crypto.address.length > 0,
+                          )}
+                          value={crypto.address}
+                          onChange={(e) =>
+                            setCrypto({
+                              ...crypto,
+                              address: e.target.value.trim(),
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Amount (Optional)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="0.01"
+                          className={inputClass(true, crypto.amount.length > 0)}
+                          value={crypto.amount}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/[^0-9.]/g, "");
+                            if ((val.match(/\./g) || []).length <= 1)
+                              setCrypto({ ...crypto, amount: val });
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {activeTab === "geo" && (
+                    <div className="space-y-5">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                            Latitude
+                          </label>
+                          <input
+                            type="number"
+                            step="any"
+                            placeholder="48.8566"
+                            className={inputClass(
+                              geo.latitude !== "" &&
+                                parseFloat(geo.latitude) >= -90 &&
+                                parseFloat(geo.latitude) <= 90,
+                              geo.latitude !== "",
+                            )}
+                            value={geo.latitude}
+                            onChange={(e) =>
+                              setGeo({ ...geo, latitude: e.target.value })
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                            Longitude
+                          </label>
+                          <input
+                            type="number"
+                            step="any"
+                            placeholder="2.3522"
+                            className={inputClass(
+                              geo.longitude !== "" &&
+                                parseFloat(geo.longitude) >= -180 &&
+                                parseFloat(geo.longitude) <= 180,
+                              geo.longitude !== "",
+                            )}
+                            value={geo.longitude}
+                            onChange={(e) =>
+                              setGeo({ ...geo, longitude: e.target.value })
+                            }
+                          />
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(
+                              (pos) =>
+                                setGeo({
+                                  ...geo,
+                                  latitude: pos.coords.latitude.toFixed(6),
+                                  longitude: pos.coords.longitude.toFixed(6),
+                                }),
+                              (err) =>
+                                alert(
+                                  "Unable to retrieve location. Check permissions.",
+                                ),
+                            );
+                          } else alert("Geolocation not supported.");
+                        }}
+                        className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all border-2 ${isDarkMode ? "bg-emerald-900/30 border-emerald-500/40 text-emerald-50 hover:bg-emerald-900/50" : "bg-white border-emerald-200 text-emerald-900 hover:border-emerald-400"}`}
+                      >
+                        <Icon name="crosshair" className="w-4 h-4" /> Use my
+                        location
+                      </button>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                          Label (Optional)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Meeting Point..."
+                          className={inputClass(true, geo.label.length > 0)}
+                          value={geo.label}
+                          onChange={(e) =>
+                            setGeo({ ...geo, label: e.target.value })
+                          }
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div
+                className={`p-10 lg:w-2/5 flex flex-col items-center justify-center gap-4 rounded-b-[2.5rem] lg:rounded-b-none lg:rounded-r-[2.5rem] ${isDarkMode ? "bg-emerald-900/20" : "bg-emerald-100/30"}`}
+              >
+                <div className="relative w-full max-w-[280px] mb-4 aspect-square bg-white p-6 rounded-[2.5rem] shadow-xl flex items-center justify-center border-4 border-emerald-500/10">
+                  {hasData ? (
+                    <>
+                      <canvas
+                        ref={qrRef}
+                        className={isGenerating ? "qr-animate" : ""}
+                      ></canvas>
+                      <div className="absolute top-3 right-3 bg-emerald-500 text-white px-2 py-1 rounded-full text-[8px] font-black">
+                        LVL H
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex flex-col items-center opacity-30">
+                      <Icon
+                        name="qr-code"
+                        className="w-20 h-20 text-emerald-900"
+                      />
+                      <p className="mt-4 text-[9px] font-black uppercase text-emerald-900">
+                        Awaiting Data
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-2 w-full max-w-[280px]">
+                  <button
+                    disabled={!hasData}
+                    onClick={copyToClipboard}
+                    className={`py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all border-2 ${hasData ? (copyStatus ? "bg-emerald-100 text-emerald-600 border-emerald-500" : "bg-white text-emerald-600 border-emerald-500/20 hover:border-emerald-500/40") : "bg-slate-800 text-slate-500 border-transparent cursor-not-allowed"}`}
+                  >
+                    <Icon
+                      name={copyStatus ? "check" : "copy"}
+                      className="w-4 h-4"
+                    />{" "}
+                    {copyStatus ? "Done" : "Copy"}
+                  </button>
+                  <button
+                    disabled={!hasData}
+                    onClick={shareQR}
+                    className={`py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all border-2 ${hasData ? "bg-white text-emerald-600 border-emerald-500/20 hover:border-emerald-500/40" : "bg-slate-800 text-slate-500 border-transparent cursor-not-allowed"}`}
+                  >
+                    <Icon name="share-2" className="w-4 h-4" /> Share
+                  </button>
+                </div>
+                <button
+                  disabled={!hasData}
+                  onClick={downloadPNG}
+                  className={`w-full max-w-[280px] py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all ${hasData ? "bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg" : "bg-slate-800 text-slate-500 cursor-not-allowed"}`}
+                >
+                  <Icon name="download" className="w-5 h-5" /> Download PNG
+                </button>
+                <button
+                  disabled={!hasData}
+                  onClick={downloadSVG}
+                  className={`w-full max-w-[280px] py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all ${hasData ? "text-emerald-500/80 hover:text-emerald-500" : "text-transparent cursor-not-allowed"}`}
+                >
+                  <Icon name="file-code" className="w-4 h-4" /> Export as SVG
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById("root")).render(
+        React.createElement(App),
+      );
+    </script>
+  </body>
+</html>
