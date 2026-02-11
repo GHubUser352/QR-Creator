@@ -225,7 +225,7 @@ Ce projet est sous licence **Creative Commons Attribution - Pas d'Utilisation Co
 - ❌ Retirer le crédit "GHubUser352"
 - ❌ Distribuer sans licence
 
-**Voir [LICENSE.txt](license.txt) pour les détails complets.**
+**Voir [LICENSE](LICENSE) pour les détails complets.**
 
 ---
 
