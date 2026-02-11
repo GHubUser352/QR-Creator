@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QR Creator</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>QR Creator Emerald</title>
     <script
       crossorigin
       src="https://unpkg.com/react@18/umd/react.production.min.js"
@@ -23,7 +26,7 @@
     <style>
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
-        overflow: hidden;
+        overflow-x: hidden;
       }
       .glass {
         backdrop-filter: blur(25px);
@@ -35,6 +38,7 @@
       }
       .custom-scroll::-webkit-scrollbar {
         width: 4px;
+        height: 4px;
       }
       .custom-scroll::-webkit-scrollbar-thumb {
         background: #10b981;
@@ -75,6 +79,14 @@
       }
       .qr-animate {
         animation: qr-generate 0.3s ease-out;
+      }
+      @media (max-width: 640px) {
+        body {
+          overflow-y: auto;
+        }
+        .mobile-compact {
+          padding: 1rem !important;
+        }
       }
     </style>
   </head>
@@ -315,6 +327,62 @@
           placeholder: "XXX XXX XXXX",
           pattern: [3, 3, 4],
         },
+        "+1-ca": {
+          flag: "ca",
+          label: "(+1) Canada",
+          shortLabel: "Canada",
+          max: 10,
+          placeholder: "XXX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+7": {
+          flag: "ru",
+          label: "(+7) Russia",
+          shortLabel: "Russia",
+          max: 10,
+          placeholder: "XXX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+20": {
+          flag: "eg",
+          label: "(+20) Egypt",
+          shortLabel: "Egypt",
+          max: 10,
+          placeholder: "1X XXXX XXXX",
+          pattern: [2, 4, 4],
+        },
+        "+27": {
+          flag: "za",
+          label: "(+27) South Africa",
+          shortLabel: "S. Africa",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+30": {
+          flag: "gr",
+          label: "(+30) Greece",
+          shortLabel: "Greece",
+          max: 10,
+          placeholder: "XXX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+31": {
+          flag: "nl",
+          label: "(+31) Netherlands",
+          shortLabel: "Netherlands",
+          max: 9,
+          placeholder: "X XXXXXXXX",
+          pattern: [1, 8],
+        },
+        "+32": {
+          flag: "be",
+          label: "(+32) Belgium",
+          shortLabel: "Belgium",
+          max: 9,
+          placeholder: "XXX XX XX XX",
+          pattern: [3, 2, 2, 2],
+        },
         "+33": {
           flag: "fr",
           label: "(+33) France",
@@ -323,13 +391,93 @@
           placeholder: "X XX XX XX XX",
           pattern: [1, 2, 2, 2, 2],
         },
+        "+34": {
+          flag: "es",
+          label: "(+34) Spain",
+          shortLabel: "Spain",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+36": {
+          flag: "hu",
+          label: "(+36) Hungary",
+          shortLabel: "Hungary",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+39": {
+          flag: "it",
+          label: "(+39) Italy",
+          shortLabel: "Italy",
+          max: 10,
+          placeholder: "3XX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+40": {
+          flag: "ro",
+          label: "(+40) Romania",
+          shortLabel: "Romania",
+          max: 9,
+          placeholder: "7XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+41": {
+          flag: "ch",
+          label: "(+41) Switzerland",
+          shortLabel: "Switzerland",
+          max: 9,
+          placeholder: "XX XXX XX XX",
+          pattern: [2, 3, 2, 2],
+        },
+        "+43": {
+          flag: "at",
+          label: "(+43) Austria",
+          shortLabel: "Austria",
+          max: 10,
+          placeholder: "XXX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
         "+44": {
           flag: "gb",
-          label: "(+44) UK",
+          label: "(+44) United Kingdom",
           shortLabel: "UK",
           max: 10,
           placeholder: "XXXX XXX XXX",
           pattern: [4, 3, 3],
+        },
+        "+45": {
+          flag: "dk",
+          label: "(+45) Denmark",
+          shortLabel: "Denmark",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+46": {
+          flag: "se",
+          label: "(+46) Sweden",
+          shortLabel: "Sweden",
+          max: 9,
+          placeholder: "XX XXX XX XX",
+          pattern: [2, 3, 2, 2],
+        },
+        "+47": {
+          flag: "no",
+          label: "(+47) Norway",
+          shortLabel: "Norway",
+          max: 8,
+          placeholder: "XXX XX XXX",
+          pattern: [3, 2, 3],
+        },
+        "+48": {
+          flag: "pl",
+          label: "(+48) Poland",
+          shortLabel: "Poland",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
         },
         "+49": {
           flag: "de",
@@ -339,6 +487,126 @@
           placeholder: "XXX XXXXXXXX",
           pattern: [3, 8],
         },
+        "+51": {
+          flag: "pe",
+          label: "(+51) Peru",
+          shortLabel: "Peru",
+          max: 9,
+          placeholder: "9XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+52": {
+          flag: "mx",
+          label: "(+52) Mexico",
+          shortLabel: "Mexico",
+          max: 10,
+          placeholder: "XX XXXX XXXX",
+          pattern: [2, 4, 4],
+        },
+        "+53": {
+          flag: "cu",
+          label: "(+53) Cuba",
+          shortLabel: "Cuba",
+          max: 8,
+          placeholder: "X XXX XXXX",
+          pattern: [1, 3, 4],
+        },
+        "+54": {
+          flag: "ar",
+          label: "(+54) Argentina",
+          shortLabel: "Argentina",
+          max: 10,
+          placeholder: "XX XXXX XXXX",
+          pattern: [2, 4, 4],
+        },
+        "+55": {
+          flag: "br",
+          label: "(+55) Brazil",
+          shortLabel: "Brazil",
+          max: 11,
+          placeholder: "XX 9XXXX XXXX",
+          pattern: [2, 5, 4],
+        },
+        "+56": {
+          flag: "cl",
+          label: "(+56) Chile",
+          shortLabel: "Chile",
+          max: 9,
+          placeholder: "9 XXXX XXXX",
+          pattern: [1, 4, 4],
+        },
+        "+57": {
+          flag: "co",
+          label: "(+57) Colombia",
+          shortLabel: "Colombia",
+          max: 10,
+          placeholder: "3XX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+58": {
+          flag: "ve",
+          label: "(+58) Venezuela",
+          shortLabel: "Venezuela",
+          max: 10,
+          placeholder: "4XX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+60": {
+          flag: "my",
+          label: "(+60) Malaysia",
+          shortLabel: "Malaysia",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+61": {
+          flag: "au",
+          label: "(+61) Australia",
+          shortLabel: "Australia",
+          max: 9,
+          placeholder: "4XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+62": {
+          flag: "id",
+          label: "(+62) Indonesia",
+          shortLabel: "Indonesia",
+          max: 11,
+          placeholder: "8XX XXXX XXXX",
+          pattern: [3, 4, 4],
+        },
+        "+63": {
+          flag: "ph",
+          label: "(+63) Philippines",
+          shortLabel: "Philippines",
+          max: 10,
+          placeholder: "9XX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+64": {
+          flag: "nz",
+          label: "(+64) New Zealand",
+          shortLabel: "N. Zealand",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+65": {
+          flag: "sg",
+          label: "(+65) Singapore",
+          shortLabel: "Singapore",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+66": {
+          flag: "th",
+          label: "(+66) Thailand",
+          shortLabel: "Thailand",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
         "+81": {
           flag: "jp",
           label: "(+81) Japan",
@@ -346,6 +614,1166 @@
           max: 10,
           placeholder: "XX XXXX XXXX",
           pattern: [2, 4, 4],
+        },
+        "+82": {
+          flag: "kr",
+          label: "(+82) South Korea",
+          shortLabel: "S. Korea",
+          max: 10,
+          placeholder: "10 XXXX XXXX",
+          pattern: [2, 4, 4],
+        },
+        "+84": {
+          flag: "vn",
+          label: "(+84) Vietnam",
+          shortLabel: "Vietnam",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+86": {
+          flag: "cn",
+          label: "(+86) China",
+          shortLabel: "China",
+          max: 11,
+          placeholder: "XXX XXXX XXXX",
+          pattern: [3, 4, 4],
+        },
+        "+90": {
+          flag: "tr",
+          label: "(+90) Turkey",
+          shortLabel: "Turkey",
+          max: 10,
+          placeholder: "5XX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+91": {
+          flag: "in",
+          label: "(+91) India",
+          shortLabel: "India",
+          max: 10,
+          placeholder: "XXXXX XXXXX",
+          pattern: [5, 5],
+        },
+        "+92": {
+          flag: "pk",
+          label: "(+92) Pakistan",
+          shortLabel: "Pakistan",
+          max: 10,
+          placeholder: "3XX XXXXXXX",
+          pattern: [3, 7],
+        },
+        "+93": {
+          flag: "af",
+          label: "(+93) Afghanistan",
+          shortLabel: "Afghanistan",
+          max: 9,
+          placeholder: "7X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+94": {
+          flag: "lk",
+          label: "(+94) Sri Lanka",
+          shortLabel: "Sri Lanka",
+          max: 9,
+          placeholder: "7X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+95": {
+          flag: "mm",
+          label: "(+95) Myanmar",
+          shortLabel: "Myanmar",
+          max: 9,
+          placeholder: "9 XXX XXXXX",
+          pattern: [1, 3, 5],
+        },
+        "+98": {
+          flag: "ir",
+          label: "(+98) Iran",
+          shortLabel: "Iran",
+          max: 10,
+          placeholder: "9XX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+212": {
+          flag: "ma",
+          label: "(+212) Morocco",
+          shortLabel: "Morocco",
+          max: 9,
+          placeholder: "X XX XX XX XX",
+          pattern: [1, 2, 2, 2, 2],
+        },
+        "+213": {
+          flag: "dz",
+          label: "(+213) Algeria",
+          shortLabel: "Algeria",
+          max: 9,
+          placeholder: "X XX XX XX XX",
+          pattern: [1, 2, 2, 2, 2],
+        },
+        "+216": {
+          flag: "tn",
+          label: "(+216) Tunisia",
+          shortLabel: "Tunisia",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+218": {
+          flag: "ly",
+          label: "(+218) Libya",
+          shortLabel: "Libya",
+          max: 9,
+          placeholder: "9X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+220": {
+          flag: "gm",
+          label: "(+220) Gambia",
+          shortLabel: "Gambia",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+221": {
+          flag: "sn",
+          label: "(+221) Senegal",
+          shortLabel: "Senegal",
+          max: 9,
+          placeholder: "7X XXX XX XX",
+          pattern: [2, 3, 2, 2],
+        },
+        "+222": {
+          flag: "mr",
+          label: "(+222) Mauritania",
+          shortLabel: "Mauritania",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+223": {
+          flag: "ml",
+          label: "(+223) Mali",
+          shortLabel: "Mali",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+224": {
+          flag: "gn",
+          label: "(+224) Guinea",
+          shortLabel: "Guinea",
+          max: 9,
+          placeholder: "6XX XX XX XX",
+          pattern: [3, 2, 2, 2],
+        },
+        "+225": {
+          flag: "ci",
+          label: "(+225) Ivory Coast",
+          shortLabel: "Ivory Coast",
+          max: 10,
+          placeholder: "XX XX XX XX XX",
+          pattern: [2, 2, 2, 2, 2],
+        },
+        "+226": {
+          flag: "bf",
+          label: "(+226) Burkina Faso",
+          shortLabel: "Burkina Faso",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+227": {
+          flag: "ne",
+          label: "(+227) Niger",
+          shortLabel: "Niger",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+228": {
+          flag: "tg",
+          label: "(+228) Togo",
+          shortLabel: "Togo",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+229": {
+          flag: "bj",
+          label: "(+229) Benin",
+          shortLabel: "Benin",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+230": {
+          flag: "mu",
+          label: "(+230) Mauritius",
+          shortLabel: "Mauritius",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+231": {
+          flag: "lr",
+          label: "(+231) Liberia",
+          shortLabel: "Liberia",
+          max: 8,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+232": {
+          flag: "sl",
+          label: "(+232) Sierra Leone",
+          shortLabel: "Sierra Leone",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+233": {
+          flag: "gh",
+          label: "(+233) Ghana",
+          shortLabel: "Ghana",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+234": {
+          flag: "ng",
+          label: "(+234) Nigeria",
+          shortLabel: "Nigeria",
+          max: 10,
+          placeholder: "XXX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+235": {
+          flag: "td",
+          label: "(+235) Chad",
+          shortLabel: "Chad",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+236": {
+          flag: "cf",
+          label: "(+236) Central African Rep",
+          shortLabel: "CAR",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+237": {
+          flag: "cm",
+          label: "(+237) Cameroon",
+          shortLabel: "Cameroon",
+          max: 9,
+          placeholder: "6 XX XX XX XX",
+          pattern: [1, 2, 2, 2, 2],
+        },
+        "+238": {
+          flag: "cv",
+          label: "(+238) Cape Verde",
+          shortLabel: "Cape Verde",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+239": {
+          flag: "st",
+          label: "(+239) São Tomé",
+          shortLabel: "São Tomé",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+240": {
+          flag: "gq",
+          label: "(+240) Equatorial Guinea",
+          shortLabel: "Eq. Guinea",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+241": {
+          flag: "ga",
+          label: "(+241) Gabon",
+          shortLabel: "Gabon",
+          max: 8,
+          placeholder: "X XX XX XX",
+          pattern: [1, 2, 2, 2],
+        },
+        "+242": {
+          flag: "cg",
+          label: "(+242) Congo",
+          shortLabel: "Congo",
+          max: 9,
+          placeholder: "X XX XX XX XX",
+          pattern: [1, 2, 2, 2, 2],
+        },
+        "+243": {
+          flag: "cd",
+          label: "(+243) DR Congo",
+          shortLabel: "DR Congo",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+244": {
+          flag: "ao",
+          label: "(+244) Angola",
+          shortLabel: "Angola",
+          max: 9,
+          placeholder: "9XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+245": {
+          flag: "gw",
+          label: "(+245) Guinea-Bissau",
+          shortLabel: "G-Bissau",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+246": {
+          flag: "io",
+          label: "(+246) Diego Garcia",
+          shortLabel: "Diego Garcia",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+248": {
+          flag: "sc",
+          label: "(+248) Seychelles",
+          shortLabel: "Seychelles",
+          max: 7,
+          placeholder: "X XXX XXX",
+          pattern: [1, 3, 3],
+        },
+        "+249": {
+          flag: "sd",
+          label: "(+249) Sudan",
+          shortLabel: "Sudan",
+          max: 9,
+          placeholder: "9X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+250": {
+          flag: "rw",
+          label: "(+250) Rwanda",
+          shortLabel: "Rwanda",
+          max: 9,
+          placeholder: "7XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+251": {
+          flag: "et",
+          label: "(+251) Ethiopia",
+          shortLabel: "Ethiopia",
+          max: 9,
+          placeholder: "9X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+252": {
+          flag: "so",
+          label: "(+252) Somalia",
+          shortLabel: "Somalia",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+253": {
+          flag: "dj",
+          label: "(+253) Djibouti",
+          shortLabel: "Djibouti",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+254": {
+          flag: "ke",
+          label: "(+254) Kenya",
+          shortLabel: "Kenya",
+          max: 9,
+          placeholder: "7XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+255": {
+          flag: "tz",
+          label: "(+255) Tanzania",
+          shortLabel: "Tanzania",
+          max: 9,
+          placeholder: "7XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+256": {
+          flag: "ug",
+          label: "(+256) Uganda",
+          shortLabel: "Uganda",
+          max: 9,
+          placeholder: "7XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+257": {
+          flag: "bi",
+          label: "(+257) Burundi",
+          shortLabel: "Burundi",
+          max: 8,
+          placeholder: "XX XX XX XX",
+          pattern: [2, 2, 2, 2],
+        },
+        "+258": {
+          flag: "mz",
+          label: "(+258) Mozambique",
+          shortLabel: "Mozambique",
+          max: 9,
+          placeholder: "8X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+260": {
+          flag: "zm",
+          label: "(+260) Zambia",
+          shortLabel: "Zambia",
+          max: 9,
+          placeholder: "9X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+261": {
+          flag: "mg",
+          label: "(+261) Madagascar",
+          shortLabel: "Madagascar",
+          max: 9,
+          placeholder: "XX XX XXX XX",
+          pattern: [2, 2, 3, 2],
+        },
+        "+262": {
+          flag: "re",
+          label: "(+262) Réunion",
+          shortLabel: "Réunion",
+          max: 9,
+          placeholder: "XXX XX XX XX",
+          pattern: [3, 2, 2, 2],
+        },
+        "+263": {
+          flag: "zw",
+          label: "(+263) Zimbabwe",
+          shortLabel: "Zimbabwe",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+264": {
+          flag: "na",
+          label: "(+264) Namibia",
+          shortLabel: "Namibia",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+265": {
+          flag: "mw",
+          label: "(+265) Malawi",
+          shortLabel: "Malawi",
+          max: 9,
+          placeholder: "X XXXX XXXX",
+          pattern: [1, 4, 4],
+        },
+        "+266": {
+          flag: "ls",
+          label: "(+266) Lesotho",
+          shortLabel: "Lesotho",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+267": {
+          flag: "bw",
+          label: "(+267) Botswana",
+          shortLabel: "Botswana",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+268": {
+          flag: "sz",
+          label: "(+268) Eswatini",
+          shortLabel: "Eswatini",
+          max: 8,
+          placeholder: "XX XX XXXX",
+          pattern: [2, 2, 4],
+        },
+        "+269": {
+          flag: "km",
+          label: "(+269) Comoros",
+          shortLabel: "Comoros",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+290": {
+          flag: "sh",
+          label: "(+290) Saint Helena",
+          shortLabel: "St Helena",
+          max: 4,
+          placeholder: "XXXX",
+          pattern: [4],
+        },
+        "+291": {
+          flag: "er",
+          label: "(+291) Eritrea",
+          shortLabel: "Eritrea",
+          max: 7,
+          placeholder: "X XXX XXX",
+          pattern: [1, 3, 3],
+        },
+        "+297": {
+          flag: "aw",
+          label: "(+297) Aruba",
+          shortLabel: "Aruba",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+298": {
+          flag: "fo",
+          label: "(+298) Faroe Islands",
+          shortLabel: "Faroe",
+          max: 6,
+          placeholder: "XXX XXX",
+          pattern: [3, 3],
+        },
+        "+299": {
+          flag: "gl",
+          label: "(+299) Greenland",
+          shortLabel: "Greenland",
+          max: 6,
+          placeholder: "XX XX XX",
+          pattern: [2, 2, 2],
+        },
+        "+350": {
+          flag: "gi",
+          label: "(+350) Gibraltar",
+          shortLabel: "Gibraltar",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+351": {
+          flag: "pt",
+          label: "(+351) Portugal",
+          shortLabel: "Portugal",
+          max: 9,
+          placeholder: "9XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+352": {
+          flag: "lu",
+          label: "(+352) Luxembourg",
+          shortLabel: "Luxembourg",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+353": {
+          flag: "ie",
+          label: "(+353) Ireland",
+          shortLabel: "Ireland",
+          max: 9,
+          placeholder: "8X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+354": {
+          flag: "is",
+          label: "(+354) Iceland",
+          shortLabel: "Iceland",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+355": {
+          flag: "al",
+          label: "(+355) Albania",
+          shortLabel: "Albania",
+          max: 9,
+          placeholder: "6X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+356": {
+          flag: "mt",
+          label: "(+356) Malta",
+          shortLabel: "Malta",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+357": {
+          flag: "cy",
+          label: "(+357) Cyprus",
+          shortLabel: "Cyprus",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+358": {
+          flag: "fi",
+          label: "(+358) Finland",
+          shortLabel: "Finland",
+          max: 10,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+359": {
+          flag: "bg",
+          label: "(+359) Bulgaria",
+          shortLabel: "Bulgaria",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+370": {
+          flag: "lt",
+          label: "(+370) Lithuania",
+          shortLabel: "Lithuania",
+          max: 8,
+          placeholder: "6XX XXXXX",
+          pattern: [3, 5],
+        },
+        "+371": {
+          flag: "lv",
+          label: "(+371) Latvia",
+          shortLabel: "Latvia",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+372": {
+          flag: "ee",
+          label: "(+372) Estonia",
+          shortLabel: "Estonia",
+          max: 8,
+          placeholder: "XXX XXXXX",
+          pattern: [3, 5],
+        },
+        "+373": {
+          flag: "md",
+          label: "(+373) Moldova",
+          shortLabel: "Moldova",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+374": {
+          flag: "am",
+          label: "(+374) Armenia",
+          shortLabel: "Armenia",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+375": {
+          flag: "by",
+          label: "(+375) Belarus",
+          shortLabel: "Belarus",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+376": {
+          flag: "ad",
+          label: "(+376) Andorra",
+          shortLabel: "Andorra",
+          max: 6,
+          placeholder: "XXX XXX",
+          pattern: [3, 3],
+        },
+        "+377": {
+          flag: "mc",
+          label: "(+377) Monaco",
+          shortLabel: "Monaco",
+          max: 9,
+          placeholder: "XX XX XX XX X",
+          pattern: [2, 2, 2, 2, 1],
+        },
+        "+378": {
+          flag: "sm",
+          label: "(+378) San Marino",
+          shortLabel: "San Marino",
+          max: 10,
+          placeholder: "XXXX XXXXXX",
+          pattern: [4, 6],
+        },
+        "+380": {
+          flag: "ua",
+          label: "(+380) Ukraine",
+          shortLabel: "Ukraine",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+381": {
+          flag: "rs",
+          label: "(+381) Serbia",
+          shortLabel: "Serbia",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+382": {
+          flag: "me",
+          label: "(+382) Montenegro",
+          shortLabel: "Montenegro",
+          max: 8,
+          placeholder: "6X XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+383": {
+          flag: "xk",
+          label: "(+383) Kosovo",
+          shortLabel: "Kosovo",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+385": {
+          flag: "hr",
+          label: "(+385) Croatia",
+          shortLabel: "Croatia",
+          max: 9,
+          placeholder: "9X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+386": {
+          flag: "si",
+          label: "(+386) Slovenia",
+          shortLabel: "Slovenia",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+387": {
+          flag: "ba",
+          label: "(+387) Bosnia",
+          shortLabel: "Bosnia",
+          max: 8,
+          placeholder: "6X XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+389": {
+          flag: "mk",
+          label: "(+389) N. Macedonia",
+          shortLabel: "N. Macedonia",
+          max: 8,
+          placeholder: "7X XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+420": {
+          flag: "cz",
+          label: "(+420) Czechia",
+          shortLabel: "Czechia",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+421": {
+          flag: "sk",
+          label: "(+421) Slovakia",
+          shortLabel: "Slovakia",
+          max: 9,
+          placeholder: "9XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+423": {
+          flag: "li",
+          label: "(+423) Liechtenstein",
+          shortLabel: "Liechtenstein",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+500": {
+          flag: "fk",
+          label: "(+500) Falklands",
+          shortLabel: "Falklands",
+          max: 5,
+          placeholder: "XXXXX",
+          pattern: [5],
+        },
+        "+501": {
+          flag: "bz",
+          label: "(+501) Belize",
+          shortLabel: "Belize",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+502": {
+          flag: "gt",
+          label: "(+502) Guatemala",
+          shortLabel: "Guatemala",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+503": {
+          flag: "sv",
+          label: "(+503) El Salvador",
+          shortLabel: "El Salvador",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+504": {
+          flag: "hn",
+          label: "(+504) Honduras",
+          shortLabel: "Honduras",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+505": {
+          flag: "ni",
+          label: "(+505) Nicaragua",
+          shortLabel: "Nicaragua",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+506": {
+          flag: "cr",
+          label: "(+506) Costa Rica",
+          shortLabel: "Costa Rica",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+507": {
+          flag: "pa",
+          label: "(+507) Panama",
+          shortLabel: "Panama",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+509": {
+          flag: "ht",
+          label: "(+509) Haiti",
+          shortLabel: "Haiti",
+          max: 8,
+          placeholder: "XX XX XXXX",
+          pattern: [2, 2, 4],
+        },
+        "+590": {
+          flag: "gp",
+          label: "(+590) Guadeloupe",
+          shortLabel: "Guadeloupe",
+          max: 9,
+          placeholder: "XXX XX XX XX",
+          pattern: [3, 2, 2, 2],
+        },
+        "+591": {
+          flag: "bo",
+          label: "(+591) Bolivia",
+          shortLabel: "Bolivia",
+          max: 8,
+          placeholder: "X XXX XXXX",
+          pattern: [1, 3, 4],
+        },
+        "+592": {
+          flag: "gy",
+          label: "(+592) Guyana",
+          shortLabel: "Guyana",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+593": {
+          flag: "ec",
+          label: "(+593) Ecuador",
+          shortLabel: "Ecuador",
+          max: 9,
+          placeholder: "9X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+594": {
+          flag: "gf",
+          label: "(+594) Fr. Guiana",
+          shortLabel: "Fr. Guiana",
+          max: 9,
+          placeholder: "XXX XX XX XX",
+          pattern: [3, 2, 2, 2],
+        },
+        "+595": {
+          flag: "py",
+          label: "(+595) Paraguay",
+          shortLabel: "Paraguay",
+          max: 9,
+          placeholder: "9XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+596": {
+          flag: "mq",
+          label: "(+596) Martinique",
+          shortLabel: "Martinique",
+          max: 9,
+          placeholder: "XXX XX XX XX",
+          pattern: [3, 2, 2, 2],
+        },
+        "+597": {
+          flag: "sr",
+          label: "(+597) Suriname",
+          shortLabel: "Suriname",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+598": {
+          flag: "uy",
+          label: "(+598) Uruguay",
+          shortLabel: "Uruguay",
+          max: 8,
+          placeholder: "9X XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+599": {
+          flag: "cw",
+          label: "(+599) Curaçao",
+          shortLabel: "Curaçao",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+670": {
+          flag: "tl",
+          label: "(+670) Timor-Leste",
+          shortLabel: "Timor-Leste",
+          max: 8,
+          placeholder: "7XXX XXXX",
+          pattern: [4, 4],
+        },
+        "+852": {
+          flag: "hk",
+          label: "(+852) Hong Kong",
+          shortLabel: "Hong Kong",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+853": {
+          flag: "mo",
+          label: "(+853) Macau",
+          shortLabel: "Macau",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+855": {
+          flag: "kh",
+          label: "(+855) Cambodia",
+          shortLabel: "Cambodia",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+856": {
+          flag: "la",
+          label: "(+856) Laos",
+          shortLabel: "Laos",
+          max: 10,
+          placeholder: "20 XX XXX XXX",
+          pattern: [2, 2, 3, 3],
+        },
+        "+880": {
+          flag: "bd",
+          label: "(+880) Bangladesh",
+          shortLabel: "Bangladesh",
+          max: 10,
+          placeholder: "1X XXXX XXXX",
+          pattern: [2, 4, 4],
+        },
+        "+960": {
+          flag: "mv",
+          label: "(+960) Maldives",
+          shortLabel: "Maldives",
+          max: 7,
+          placeholder: "XXX XXXX",
+          pattern: [3, 4],
+        },
+        "+961": {
+          flag: "lb",
+          label: "(+961) Lebanon",
+          shortLabel: "Lebanon",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+962": {
+          flag: "jo",
+          label: "(+962) Jordan",
+          shortLabel: "Jordan",
+          max: 9,
+          placeholder: "7X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+963": {
+          flag: "sy",
+          label: "(+963) Syria",
+          shortLabel: "Syria",
+          max: 9,
+          placeholder: "9XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+964": {
+          flag: "iq",
+          label: "(+964) Iraq",
+          shortLabel: "Iraq",
+          max: 10,
+          placeholder: "7XX XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+965": {
+          flag: "kw",
+          label: "(+965) Kuwait",
+          shortLabel: "Kuwait",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+966": {
+          flag: "sa",
+          label: "(+966) Saudi Arabia",
+          shortLabel: "Saudi Arabia",
+          max: 9,
+          placeholder: "5X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+967": {
+          flag: "ye",
+          label: "(+967) Yemen",
+          shortLabel: "Yemen",
+          max: 9,
+          placeholder: "7XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+968": {
+          flag: "om",
+          label: "(+968) Oman",
+          shortLabel: "Oman",
+          max: 8,
+          placeholder: "9XXX XXXX",
+          pattern: [4, 4],
+        },
+        "+970": {
+          flag: "ps",
+          label: "(+970) Palestine",
+          shortLabel: "Palestine",
+          max: 9,
+          placeholder: "5XX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+971": {
+          flag: "ae",
+          label: "(+971) UAE",
+          shortLabel: "UAE",
+          max: 9,
+          placeholder: "5X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+972": {
+          flag: "il",
+          label: "(+972) Israel",
+          shortLabel: "Israel",
+          max: 9,
+          placeholder: "5X XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+973": {
+          flag: "bh",
+          label: "(+973) Bahrain",
+          shortLabel: "Bahrain",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+974": {
+          flag: "qa",
+          label: "(+974) Qatar",
+          shortLabel: "Qatar",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+975": {
+          flag: "bt",
+          label: "(+975) Bhutan",
+          shortLabel: "Bhutan",
+          max: 8,
+          placeholder: "XX XXX XXX",
+          pattern: [2, 3, 3],
+        },
+        "+976": {
+          flag: "mn",
+          label: "(+976) Mongolia",
+          shortLabel: "Mongolia",
+          max: 8,
+          placeholder: "XXXX XXXX",
+          pattern: [4, 4],
+        },
+        "+977": {
+          flag: "np",
+          label: "(+977) Nepal",
+          shortLabel: "Nepal",
+          max: 10,
+          placeholder: "98X XXX XXXX",
+          pattern: [3, 3, 4],
+        },
+        "+992": {
+          flag: "tj",
+          label: "(+992) Tajikistan",
+          shortLabel: "Tajikistan",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+993": {
+          flag: "tm",
+          label: "(+993) Turkmenistan",
+          shortLabel: "Turkmenistan",
+          max: 8,
+          placeholder: "XX XXXXXX",
+          pattern: [2, 6],
+        },
+        "+994": {
+          flag: "az",
+          label: "(+994) Azerbaijan",
+          shortLabel: "Azerbaijan",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
+        },
+        "+995": {
+          flag: "ge",
+          label: "(+995) Georgia",
+          shortLabel: "Georgia",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+996": {
+          flag: "kg",
+          label: "(+996) Kyrgyzstan",
+          shortLabel: "Kyrgyzstan",
+          max: 9,
+          placeholder: "XXX XXX XXX",
+          pattern: [3, 3, 3],
+        },
+        "+998": {
+          flag: "uz",
+          label: "(+998) Uzbekistan",
+          shortLabel: "Uzbekistan",
+          max: 9,
+          placeholder: "XX XXX XXXX",
+          pattern: [2, 3, 4],
         },
       };
 
@@ -383,6 +1811,8 @@
           latitude: "",
           longitude: "",
           label: "",
+          useAddress: false,
+          address: "",
         });
         const qrRef = useRef(null);
 
@@ -396,13 +1826,34 @@
           return res.trim();
         }, []);
 
+        const getUrlPlaceholder = useCallback(() => {
+          switch (protocol) {
+            case "https://":
+            case "http://":
+            case "ftp://":
+            case "ftps://":
+              return "example.com";
+            case "mailto:":
+              return "contact@example.com";
+            case "tel:":
+              return "+1234567890";
+            case "sms:":
+              return "+1234567890";
+            default:
+              return "example.com";
+          }
+        }, [protocol]);
+
         const currentCountry = COUNTRY_DATA[contact.phonePrefix];
         const smsCountry = COUNTRY_DATA[sms.phonePrefix];
         const rawTel = contact.tel.replace(/\s/g, "");
         const smsRawTel = sms.tel.replace(/\s/g, "");
 
-        const isUrlValid =
-          url.includes(".") && url.split(".").every((p) => p.length > 0);
+        const isUrlValid = protocol.startsWith("mailto:")
+          ? /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(url)
+          : protocol.startsWith("tel:") || protocol.startsWith("sms:")
+            ? /^\+?[0-9]{7,15}$/.test(url.replace(/\s/g, ""))
+            : url.includes(".") && url.split(".").every((p) => p.length > 0);
         const isEmailValid = /^[a-zA-Z0-9._%+-]+$/.test(contact.emailUser);
         const isPhoneValid =
           rawTel.length >= 8 && rawTel.length <= currentCountry.max;
@@ -417,16 +1868,24 @@
           usdt: /^0x[a-fA-F0-9]{40}$/,
           bnb: /^0x[a-fA-F0-9]{40}$/,
           solana: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
+          xrp: /^r[a-zA-Z0-9]{24,34}$/,
+          cardano: /^addr1[a-z0-9]{58,}$/,
+          dogecoin: /^D[5-9A-HJ-NP-U][1-9A-HJ-NP-Za-km-z]{32}$/,
+          tron: /^T[a-zA-Z0-9]{33}$/,
+          polkadot: /^1[a-zA-Z0-9]{47}$/,
+          litecoin: /^[LM][a-zA-Z0-9]{33}$/,
+          avalanche: /^(X-|P-)?avax[a-z0-9]{39}$/,
         };
         const isCryptoValid =
           cryptoRegex[crypto.blockchain]?.test(crypto.address) || false;
-        const isGeoValid =
-          geo.latitude !== "" &&
-          geo.longitude !== "" &&
-          parseFloat(geo.latitude) >= -90 &&
-          parseFloat(geo.latitude) <= 90 &&
-          parseFloat(geo.longitude) >= -180 &&
-          parseFloat(geo.longitude) <= 180;
+        const isGeoValid = geo.useAddress
+          ? geo.address.length > 5
+          : geo.latitude !== "" &&
+            geo.longitude !== "" &&
+            parseFloat(geo.latitude) >= -90 &&
+            parseFloat(geo.latitude) <= 90 &&
+            parseFloat(geo.longitude) >= -180 &&
+            parseFloat(geo.longitude) <= 180;
 
         const hasData =
           activeTab === "url"
@@ -470,11 +1929,22 @@
               usdt: "ethereum:",
               bnb: "ethereum:",
               solana: "solana:",
+              xrp: "xrp:",
+              cardano: "cardano:",
+              dogecoin: "dogecoin:",
+              tron: "tron:",
+              polkadot: "polkadot:",
+              litecoin: "litecoin:",
+              avalanche: "avalanche:",
             };
             data = `${prefixes[crypto.blockchain]}${crypto.address}${crypto.amount ? `?amount=${crypto.amount}` : ""}`;
-          } else if (activeTab === "geo")
-            data = `geo:${geo.latitude},${geo.longitude}${geo.label ? `?q=${geo.latitude},${geo.longitude}(${encodeURIComponent(geo.label)})` : ""}`;
-          else
+          } else if (activeTab === "geo") {
+            if (geo.useAddress) {
+              data = `geo:0,0?q=${encodeURIComponent(geo.address)}${geo.label ? ` (${geo.label})` : ""}`;
+            } else {
+              data = `geo:${geo.latitude},${geo.longitude}${geo.label ? `?q=${geo.latitude},${geo.longitude}(${encodeURIComponent(geo.label)})` : ""}`;
+            }
+          } else
             data = `BEGIN:VCARD\nVERSION:3.0\nFN:${contact.fn} ${contact.ln}\n${rawTel ? `TEL:${contact.phonePrefix.split("-")[0]}${rawTel}\n` : ""}${contact.emailUser ? `EMAIL:${contact.emailUser}${contact.emailDomain}\n` : ""}END:VCARD`;
           try {
             new QRious({
@@ -482,7 +1952,7 @@
               value: data,
               size: 600,
               level: "H",
-              foreground: isDarkMode ? "#10b981" : "#064e3b",
+              foreground: "#000000",
               background: "#ffffff",
             });
           } catch (e) {
@@ -551,24 +2021,49 @@
         const protocolOptions = [
           { value: "https://", label: "https://" },
           { value: "http://", label: "http://" },
+          { value: "ftp://", label: "ftp://" },
+          { value: "ftps://", label: "ftps://" },
+          { value: "mailto:", label: "mailto:" },
+          { value: "tel:", label: "tel:" },
+          { value: "sms:", label: "sms:" },
         ];
         const emailDomainOptions = [
           { value: "@gmail.com", label: "@gmail.com" },
           { value: "@outlook.com", label: "@outlook.com" },
-          { value: "@proton.me", label: "@proton.me" },
+          { value: "@yahoo.com", label: "@yahoo.com" },
           { value: "@icloud.com", label: "@icloud.com" },
+          { value: "@proton.me", label: "@proton.me" },
+          { value: "@hotmail.com", label: "@hotmail.com" },
+          { value: "@aol.com", label: "@aol.com" },
+          { value: "@zoho.com", label: "@zoho.com" },
+          { value: "@gmx.com", label: "@gmx.com" },
+          { value: "@yandex.com", label: "@yandex.com" },
+          { value: "@mail.com", label: "@mail.com" },
+          { value: "@tutanota.com", label: "@tutanota.com" },
+          { value: "@fastmail.com", label: "@fastmail.com" },
+          { value: "@runbox.com", label: "@runbox.com" },
+          { value: "@mailfence.com", label: "@mailfence.com" },
         ];
         const securityOptions = [
-          { value: "WPA", label: "WPA/WPA2" },
+          { value: "WPA(2)", label: "WPA/WPA2" },
+          { value: "WPA2", label: "WPA2" },
+          { value: "WPA3", label: "WPA3" },
           { value: "WEP", label: "WEP" },
-          { value: "nopass", label: "No Password" },
+          { value: "Public (No Password)", label: "No Password" },
         ];
         const blockchainOptions = [
-          { value: "bitcoin", label: "Bitcoin (BTC)" },
-          { value: "ethereum", label: "Ethereum (ETH)" },
-          { value: "usdt", label: "Tether (USDT)" },
-          { value: "bnb", label: "Binance (BNB)" },
-          { value: "solana", label: "Solana (SOL)" },
+          { value: "BTC", label: "Bitcoin" },
+          { value: "ETH", label: "Ethereum" },
+          { value: "USDT", label: "Tether" },
+          { value: "BNB", label: "BNB" },
+          { value: "SOLANA", label: "Solana" },
+          { value: "XRP", label: "XRP" },
+          { value: "ADA", label: "Cardano" },
+          { value: "DOGE", label: "Dogecoin" },
+          { value: "TRX", label: "Tron" },
+          { value: "DOT", label: "Polkadot" },
+          { value: "LTC", label: "Litecoin" },
+          { value: "AVAX", label: "Avalanche" },
         ];
         const phoneOptions = Object.entries(COUNTRY_DATA).map(([k, v]) => ({
           value: k,
@@ -579,14 +2074,14 @@
         }));
 
         return (
-          <div className="flex items-center justify-center p-4">
+          <div className="flex items-center justify-center p-2 sm:p-4">
             <div
-              className={`w-full max-w-5xl rounded-[2.5rem] border-2 glass flex flex-col lg:flex-row shadow-2xl ${isDarkMode ? "bg-emerald-950/40 border-emerald-800/40" : "bg-white border-emerald-200"}`}
+              className={`w-full max-w-5xl rounded-2xl sm:rounded-[2.5rem] border-2 glass flex flex-col lg:flex-row shadow-2xl ${isDarkMode ? "bg-emerald-950/40 border-emerald-800/40" : "bg-white border-emerald-200"}`}
             >
-              <div className="p-8 lg:p-12 lg:w-3/5 space-y-8">
+              <div className="p-4 sm:p-8 lg:p-12 lg:w-3/5 space-y-6 sm:space-y-8">
                 <div className="flex justify-between items-center">
                   <h1
-                    className={`text-3xl font-extrabold tracking-tight ${isDarkMode ? "text-white" : "text-emerald-900"}`}
+                    className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${isDarkMode ? "text-white" : "text-emerald-900"}`}
                   >
                     QR Creator
                   </h1>
@@ -625,7 +2120,11 @@
                   {activeTab === "url" && (
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
-                        Website URL
+                        {protocol === "mailto:"
+                          ? "Email Address"
+                          : protocol === "tel:" || protocol === "sms:"
+                            ? "Phone Number"
+                            : "Website URL"}
                       </label>
                       <div className="flex gap-3">
                         <CustomSelect
@@ -637,7 +2136,7 @@
                         />
                         <input
                           type="text"
-                          placeholder="google.com"
+                          placeholder={getUrlPlaceholder()}
                           className={inputClass(isUrlValid, url.length > 0)}
                           value={url}
                           onChange={(e) =>
@@ -940,70 +2439,103 @@
                   )}
                   {activeTab === "geo" && (
                     <div className="space-y-5">
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
-                            Latitude
-                          </label>
-                          <input
-                            type="number"
-                            step="any"
-                            placeholder="48.8566"
-                            className={inputClass(
-                              geo.latitude !== "" &&
-                                parseFloat(geo.latitude) >= -90 &&
-                                parseFloat(geo.latitude) <= 90,
-                              geo.latitude !== "",
-                            )}
-                            value={geo.latitude}
-                            onChange={(e) =>
-                              setGeo({ ...geo, latitude: e.target.value })
-                            }
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
-                            Longitude
-                          </label>
-                          <input
-                            type="number"
-                            step="any"
-                            placeholder="2.3522"
-                            className={inputClass(
-                              geo.longitude !== "" &&
-                                parseFloat(geo.longitude) >= -180 &&
-                                parseFloat(geo.longitude) <= 180,
-                              geo.longitude !== "",
-                            )}
-                            value={geo.longitude}
-                            onChange={(e) =>
-                              setGeo({ ...geo, longitude: e.target.value })
-                            }
-                          />
-                        </div>
+                      <div className="flex gap-2 p-1 bg-black/10 rounded-xl">
+                        <button
+                          onClick={() => setGeo({ ...geo, useAddress: false })}
+                          className={`flex-1 py-2 px-3 rounded-lg font-bold text-xs transition ${!geo.useAddress ? "bg-emerald-500 text-white" : "text-emerald-500/60"}`}
+                        >
+                          Coordinates
+                        </button>
+                        <button
+                          onClick={() => setGeo({ ...geo, useAddress: true })}
+                          className={`flex-1 py-2 px-3 rounded-lg font-bold text-xs transition ${geo.useAddress ? "bg-emerald-500 text-white" : "text-emerald-500/60"}`}
+                        >
+                          Address
+                        </button>
                       </div>
-                      <button
-                        onClick={() => {
-                          if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(
-                              (pos) =>
-                                setGeo({
-                                  ...geo,
-                                  latitude: pos.coords.latitude.toFixed(6),
-                                  longitude: pos.coords.longitude.toFixed(6),
-                                }),
-                              (err) =>
-                                alert(
-                                  "Unable to retrieve location. Check permissions.",
-                                ),
-                            );
-                          } else alert("Geolocation not supported.");
-                        }}
-                        className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all border-2 ${isDarkMode ? "bg-emerald-900/30 border-emerald-500/40 text-emerald-50 hover:bg-emerald-900/50" : "bg-white border-emerald-200 text-emerald-900 hover:border-emerald-400"}`}
-                      >
-                        <Icon name="crosshair" className="w-4 h-4" /> Use my
-                        location
-                      </button>
+                      {!geo.useAddress ? (
+                        <>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-2">
+                              <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                                Latitude
+                              </label>
+                              <input
+                                type="number"
+                                step="any"
+                                placeholder="48.8566"
+                                className={inputClass(
+                                  geo.latitude !== "" &&
+                                    parseFloat(geo.latitude) >= -90 &&
+                                    parseFloat(geo.latitude) <= 90,
+                                  geo.latitude !== "",
+                                )}
+                                value={geo.latitude}
+                                onChange={(e) =>
+                                  setGeo({ ...geo, latitude: e.target.value })
+                                }
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                                Longitude
+                              </label>
+                              <input
+                                type="number"
+                                step="any"
+                                placeholder="2.3522"
+                                className={inputClass(
+                                  geo.longitude !== "" &&
+                                    parseFloat(geo.longitude) >= -180 &&
+                                    parseFloat(geo.longitude) <= 180,
+                                  geo.longitude !== "",
+                                )}
+                                value={geo.longitude}
+                                onChange={(e) =>
+                                  setGeo({ ...geo, longitude: e.target.value })
+                                }
+                              />
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => {
+                              if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(
+                                  (pos) =>
+                                    setGeo({
+                                      ...geo,
+                                      latitude: pos.coords.latitude.toFixed(6),
+                                      longitude:
+                                        pos.coords.longitude.toFixed(6),
+                                    }),
+                                  (err) =>
+                                    alert(
+                                      "Unable to retrieve location. Check permissions.",
+                                    ),
+                                );
+                              } else alert("Geolocation not supported.");
+                            }}
+                            className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all border-2 ${isDarkMode ? "bg-emerald-900/30 border-emerald-500/40 text-emerald-50 hover:bg-emerald-900/50" : "bg-white border-emerald-200 text-emerald-900 hover:border-emerald-400"}`}
+                          >
+                            <Icon name="crosshair" className="w-4 h-4" /> Use my
+                            location
+                          </button>
+                        </>
+                      ) : (
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
+                            Address
+                          </label>
+                          <textarea
+                            placeholder="123 Main St, Paris, France"
+                            className={`${inputClass(geo.address.length > 5, geo.address.length > 0)} resize-none h-20`}
+                            value={geo.address}
+                            onChange={(e) =>
+                              setGeo({ ...geo, address: e.target.value })
+                            }
+                          />
+                        </div>
+                      )}
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase text-emerald-500/80 tracking-widest">
                           Label (Optional)

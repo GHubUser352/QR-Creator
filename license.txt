@@ -1,16 +1,225 @@
+═══════════════════════════════════════════════════════════════════════════════
 CONTRAT DE LICENCE CREATIVE COMMONS
-Attribution - Pas d’Utilisation Commerciale 4.0 International (CC BY-NC 4.0)
+Attribution - Pas d'Utilisation Commerciale 4.0 International (CC BY-NC 4.0)
+═══════════════════════════════════════════════════════════════════════════════
 
 Copyright (c) 2026 GHubUser352 - QR Creator Project
 
-VOUS ÊTES LIBRE DE :
-- Partager : copier, distribuer et communiquer le matériel par tous moyens et sous tous formats.
-- Adapter : remixer, transformer et créer à partir du matériel.
+Ce document constitue le Contrat de Licence Creative Commons Attribution - Pas 
+d'Utilisation Commerciale 4.0 International. En exerçant les Droits accordés par 
+cette licence (définis ci-dessous), vous acceptez d'être lié par les termes et 
+conditions de la présente Licence Publique.
 
-SELON LES CONDITIONS SUIVANTES :
-1. Attribution : Vous devez créditer l'œuvre, intégrer un lien vers la licence et indiquer si des modifications ont été effectuées. 
-2. Pas d’Utilisation Commerciale : Vous n'êtes pas autorisé à faire un usage commercial de cette œuvre, tout ou partie du matériel la composant. Il est strictement interdit de vendre l'accès à cet outil ou de l'intégrer dans un service payant.
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 1 - DÉFINITIONS
+═══════════════════════════════════════════════════════════════════════════════
 
-L'offrant ne peut retirer les libertés concédées tant que vous appliquez les termes de cette licence.
+a. "Œuvre sous Licence" désigne l'application QR Creator, incluant tout 
+   le code source HTML/JavaScript/CSS, la documentation et les ressources associées.
 
-LE LOGICIEL EST FOURNI "TEL QUEL", SANS GARANTIE D'AUCUNE SORTE.
+b. "Vous" désigne la personne physique ou morale exerçant les droits accordés par 
+   cette Licence.
+
+c. "Partager" signifie mettre à disposition du public par tout moyen ou procédé 
+   nécessitant l'autorisation selon les Droits accordés, tels que la reproduction, 
+   l'exposition publique, la représentation publique, la distribution, la diffusion, 
+   la communication ou l'importation, ainsi que la mise à disposition du public de 
+   manière que chacun puisse y avoir accès.
+
+d. "Adapter" signifie modifier, arranger, ou transformer l'Œuvre sous Licence d'une 
+   manière nécessitant l'autorisation selon les Droits accordés.
+
+e. "Utilisation Commerciale" désigne toute utilisation principalement destinée ou 
+   conçue pour obtenir un avantage commercial ou une compensation monétaire.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 2 - ÉTENDUE DE LA LICENCE
+═══════════════════════════════════════════════════════════════════════════════
+
+Sous réserve du respect des termes et conditions de la présente Licence, le Donneur 
+de Licence Vous autorise à exercer pour le monde entier, à titre gratuit, non 
+sous-licenciable, non exclusif, irrévocable, les Droits suivants sur l'Œuvre sous 
+Licence :
+
+✅ VOUS ÊTES LIBRE DE :
+
+a. PARTAGER : Copier, distribuer et communiquer le matériel par tous moyens et sous 
+   tous formats, y compris :
+   - Publication sur des sites web ou plateformes de partage de code
+   - Distribution dans des contextes éducatifs ou de formation
+   - Intégration dans des projets open source
+   - Hébergement sur des serveurs personnels ou professionnels
+
+b. ADAPTER : Remixer, transformer et créer à partir du matériel, incluant :
+   - Modification du code source pour ajouter des fonctionnalités
+   - Personnalisation de l'interface utilisateur
+   - Traduction dans d'autres langues
+   - Intégration dans des applications plus larges
+   - Création de versions dérivées
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 3 - CONDITIONS DE LA LICENCE
+═══════════════════════════════════════════════════════════════════════════════
+
+Votre exercice des Droits accordés est expressément soumis aux conditions suivantes :
+
+📋 CONDITION 1 : ATTRIBUTION
+
+Vous devez :
+a. Conserver les mentions suivantes si elles sont fournies par le Donneur de Licence :
+   - Identification du créateur : "GHubUser352"
+   - Mention de copyright : "Copyright (c) 2026 GHubUser352"
+   - Lien vers la licence : https://creativecommons.org/licenses/by-nc/4.0/
+   - Lien vers l'Œuvre originale https://github.com/GHubUser352/QR-Creator
+
+b. Indiquer si Vous avez modifié l'Œuvre sous Licence et conserver un suivi des 
+   modifications précédentes.
+
+c. Indiquer que l'Œuvre sous Licence est mise à disposition selon les termes de la 
+   présente Licence Publique, et en inclure le texte ou l'URI ou le lien 
+   hypertexte vers celle-ci.
+
+d. Format d'attribution recommandé :
+   "QR Creator par GHubUser352, sous licence CC BY-NC 4.0"
+
+🚫 CONDITION 2 : PAS D'UTILISATION COMMERCIALE
+
+a. INTERDICTIONS STRICTES :
+   Vous n'êtes PAS autorisé à exercer les Droits accordés à des fins ou dans le 
+   cadre d'une Utilisation Commerciale, incluant mais sans s'y limiter :
+
+   ❌ Vente directe de l'application ou de versions modifiées
+   ❌ Intégration dans un logiciel ou service payant
+   ❌ Utilisation dans le cadre d'une activité générant des revenus directs
+   ❌ Monétisation via publicités, abonnements, ou tout autre modèle payant
+   ❌ Vente d'accès à l'outil (même sous forme de "premium" ou "pro")
+   ❌ Revente de QR codes générés par l'outil
+   ❌ Utilisation comme service payant (SaaS, API payante, etc.)
+   ❌ Distribution commerciale par des éditeurs de logiciels
+   ❌ Bundling avec des produits commerciaux
+   ❌ Utilisation dans des campagnes marketing payantes
+
+b. UTILISATIONS NON-COMMERCIALES AUTORISÉES :
+   ✅ Usage personnel gratuit
+   ✅ Projets éducatifs et académiques
+   ✅ Recherche scientifique
+   ✅ Utilisation interne en entreprise (sans revente du service)
+   ✅ Organisations à but non lucratif et ONG
+   ✅ Projets open source gratuits
+   ✅ Démonstrations techniques et portfolios
+
+c. EXCEPTIONS ET CAS LIMITES :
+   - Si Vous avez un doute sur le caractère commercial d'une utilisation, contactez 
+     le Donneur de Licence pour obtenir une autorisation explicite.
+   - Les dons volontaires non obligatoires sont acceptables si l'accès reste gratuit.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 4 - LIMITATIONS ET EXCLUSIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+a. ABSENCE DE GARANTIE :
+   Le Donneur de Licence met à disposition l'Œuvre sous Licence en l'état (« AS IS ») 
+   et « AS AVAILABLE », sans déclaration ni garantie d'aucune sorte, expresse, 
+   implicite, légale ou autre, notamment concernant :
+   - L'absence de défauts
+   - La compatibilité avec votre système
+   - La sécurité
+   - La performance
+   - L'exactitude des résultats
+   - La conformité à un usage particulier
+
+b. LIMITATION DE RESPONSABILITÉ :
+   Dans la mesure permise par la loi applicable, le Donneur de Licence ne sera en 
+   aucun cas responsable envers Vous, sur la base d'aucun fondement juridique 
+   (incluant, notamment, la négligence) pour :
+   - Tout dommage direct, indirect, spécial, accessoire ou consécutif
+   - Perte de données ou de bénéfices
+   - Interruption d'activité
+   - Tout autre dommage commercial
+
+c. RESPECT DES LOIS :
+   Cette Licence ne Vous autorise pas à enfreindre les lois et réglementations 
+   applicables, notamment :
+   - Lois sur la protection des données (RGPD, etc.)
+   - Propriété intellectuelle de tiers
+   - Réglementations sur l'export de technologies de chiffrement
+   - Droits à la vie privée
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 5 - DURÉE ET RÉSILIATION
+═══════════════════════════════════════════════════════════════════════════════
+
+a. DURÉE :
+   La présente Licence s'applique pendant toute la durée de protection des Droits 
+   accordés. Cependant, si Vous manquez à Vos obligations prévues par la présente 
+   Licence, Vos Droits accordés par la présente Licence seront automatiquement 
+   révoqués.
+
+b. RÉTABLISSEMENT :
+   Dans le cas où Vos Droits auraient été révoqués puis rétablis, ils le seront :
+   - Automatiquement à compter de la date à laquelle la violation aura cessé, à 
+     condition que la violation ait cessé dans les 30 jours suivant Votre 
+     découverte de celle-ci ; ou
+   - Sur décision expresse du Donneur de Licence.
+
+c. SURVIE :
+   Les Sections 1, 4, 5, 6, 7 et 8 survivent à la résiliation de la présente Licence.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 6 - AUTRES TERMES ET CONDITIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+a. Le Donneur de Licence ne sera pas lié par des termes ou conditions supplémentaires 
+   ou différents qui seraient communiqués par Vous, sauf si cela a été expressément 
+   convenu.
+
+b. Tous arrangements, ententes ou accords relatifs à l'Œuvre sous Licence non 
+   mentionnés dans la présente Licence sont séparés et indépendants des termes et 
+   conditions de la présente Licence.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 7 - INTERPRÉTATION
+═══════════════════════════════════════════════════════════════════════════════
+
+a. Afin de lever toute ambiguïté, la présente Licence ne doit en aucune façon être 
+   interprétée comme réduisant, limitant, restreignant ou imposant des conditions 
+   à une utilisation de l'Œuvre sous Licence qui pourrait légalement être faite 
+   sans autorisation au titre de la présente Licence.
+
+b. Dans la mesure du possible, si une quelconque disposition de la présente Licence 
+   est réputée inapplicable, elle sera automatiquement modifiée a minima afin de la 
+   rendre applicable. Dans le cas où la disposition ne peut pas être modifiée, elle 
+   sera écartée de la présente Licence sans que cela n'affecte l'applicabilité des 
+   autres termes et conditions.
+
+c. Aucun terme ni aucune condition de la présente Licence ne sera écarté(e) et aucune 
+   violation ne sera acceptée sans le consentement exprès du Donneur de Licence.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 8 - COORDONNÉES ET INFORMATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+Pour toute question concernant cette licence ou pour demander une autorisation 
+d'utilisation commerciale :
+
+- GitHub : https://github.com/GHubUser352
+- Projet : https://github.com/GHubUser352/qr-creator
+- Issues : https://github.com/GHubUser352/qr-creator/issues
+
+Pour obtenir une copie officielle de cette licence :
+https://creativecommons.org/licenses/by-nc/4.0/legalcode.fr
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Creative Commons n'est pas un cabinet d'avocats et ne fournit pas de services 
+juridiques. La mise à disposition de la présente Licence ne crée pas de relation 
+client-avocat ni aucune autre relation. Creative Commons met à disposition ses 
+licences et les informations connexes en l'état. Creative Commons ne donne aucune 
+garantie concernant ses licences, les œuvres mises à disposition selon leurs termes 
+et conditions, ou toute information connexe. Creative Commons décline toute 
+responsabilité pour les dommages résultant de leur utilisation dans toute la mesure 
+du possible.
+
+═══════════════════════════════════════════════════════════════════════════════
+FIN DU CONTRAT DE LICENCE
+═══════════════════════════════════════════════════════════════════════════════
